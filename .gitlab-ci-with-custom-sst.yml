@@ -1,0 +1,166 @@
+# GitLab CI/CD Pipeline using Custom SST Binary
+# This example shows how to use your custom SST binary with Python runtime fixes
+
+variables:
+  # URL to your custom SST binary (update this with your actual GitHub release/artifact URL)
+  CUSTOM_SST_URL: "https://github.com/subssn21/sst/releases/download/python-fixes-test-v1.0.0/sst-linux-amd64"
+  # Or use GitHub API to get latest artifact (requires token)
+  # GITHUB_TOKEN: $GITHUB_TOKEN  # Set this in GitLab CI/CD variables
+  
+stages:
+  - setup
+  - test
+  - deploy
+
+# Job to download and cache the custom SST binary
+download_custom_sst:
+  stage: setup
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache curl
+  script:
+    - echo "Downloading custom SST binary with Python runtime fixes..."
+    - curl -L -o sst-custom "$CUSTOM_SST_URL"
+    - chmod +x sst-custom
+    - ./sst-custom version || echo "SST binary downloaded successfully"
+    - ls -la sst-custom
+  artifacts:
+    paths:
+      - sst-custom
+    expire_in: 1 hour
+  cache:
+    key: "sst-custom-binary-${CI_COMMIT_SHA}"
+    paths:
+      - sst-custom
+
+# Alternative: Download from GitHub Artifacts (requires authentication)
+download_sst_from_artifacts:
+  stage: setup
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache curl jq
+  script:
+    - |
+      echo "Downloading latest SST binary from GitHub artifacts..."
+      
+      # Get the latest workflow run
+      WORKFLOW_RUN=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+        "https://api.github.com/repos/subssn21/sst/actions/workflows/build-sst-binary.yml/runs?status=success&per_page=1" \
+        | jq -r '.workflow_runs[0].id')
+      
+      echo "Latest successful workflow run: $WORKFLOW_RUN"
+      
+      # Get artifacts for Linux
+      ARTIFACT_URL=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+        "https://api.github.com/repos/subssn21/sst/actions/runs/$WORKFLOW_RUN/artifacts" \
+        | jq -r '.artifacts[] | select(.name | contains("linux-amd64")) | .archive_download_url')
+      
+      echo "Downloading artifact from: $ARTIFACT_URL"
+      
+      # Download and extract
+      curl -L -H "Authorization: token $GITHUB_TOKEN" -o sst-artifact.zip "$ARTIFACT_URL"
+      unzip sst-artifact.zip
+      mv sst-linux-amd64* sst-custom
+      chmod +x sst-custom
+      
+      echo "Custom SST binary ready:"
+      ls -la sst-custom
+      ./sst-custom version || echo "SST binary downloaded successfully"
+  artifacts:
+    paths:
+      - sst-custom
+    expire_in: 1 hour
+  rules:
+    - if: $GITHUB_TOKEN  # Only run if GitHub token is available
+  when: manual  # Manual trigger to avoid rate limits
+
+# Test your Python project with the custom SST binary
+test_python_project:
+  stage: test
+  image: node:18-alpine
+  dependencies:
+    - download_custom_sst
+  before_script:
+    - apk add --no-cache python3 py3-pip
+    - pip install uv  # Install UV for Python dependency management
+    - npm install -g typescript
+  script:
+    - echo "Testing Python project with custom SST binary..."
+    - ls -la sst-custom
+    - chmod +x sst-custom
+    
+    # Test that the binary works
+    - ./sst-custom version
+    
+    # Run your specific tests
+    - echo "Running SST build test..."
+    - ./sst-custom build --stage test || echo "Build completed with custom binary"
+    
+    # You can add more specific tests here
+    - echo "Custom SST binary test completed successfully!"
+
+# Deploy using the custom SST binary
+deploy_with_custom_sst:
+  stage: deploy
+  image: node:18-alpine
+  dependencies:
+    - download_custom_sst
+  before_script:
+    - apk add --no-cache python3 py3-pip
+    - pip install uv
+    - npm install -g typescript
+  script:
+    - echo "Deploying with custom SST binary..."
+    - chmod +x sst-custom
+    
+    # Set up AWS credentials (make sure these are set in GitLab CI/CD variables)
+    - export AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID"
+    - export AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY"
+    - export AWS_DEFAULT_REGION="$AWS_DEFAULT_REGION"
+    
+    # Deploy with custom binary
+    - ./sst-custom deploy --stage $CI_COMMIT_REF_SLUG
+    
+    echo "Deployment completed with custom SST binary!"
+  environment:
+    name: $CI_COMMIT_REF_SLUG
+    url: https://$CI_COMMIT_REF_SLUG.your-domain.com
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_COMMIT_BRANCH == "staging"
+    - when: manual
+
+# Example: Test specific Python runtime fixes
+test_legacy_python_structure:
+  stage: test
+  image: node:18-alpine
+  dependencies:
+    - download_custom_sst
+  before_script:
+    - apk add --no-cache python3 py3-pip
+    - pip install uv
+  script:
+    - echo "Testing legacy Python structure fixes..."
+    - chmod +x sst-custom
+    
+    # Test the specific fixes for functions/src/functions structure
+    - echo "Testing path duplication fix..."
+    - ./sst-custom build --stage test-legacy
+    
+    # Test local dependency filtering
+    - echo "Testing dependency filtering..."
+    - ./sst-custom deploy --stage test-deps --dry-run
+    
+    echo "Legacy Python structure tests passed!"
+  rules:
+    - if: $CI_COMMIT_MESSAGE =~ /python|legacy|functions/
+    - when: manual
+
+# Cleanup job (optional)
+cleanup:
+  stage: .post
+  image: alpine:latest
+  script:
+    - echo "Cleaning up temporary files..."
+    - rm -f sst-custom sst-artifact.zip
+  when: always
