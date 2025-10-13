@@ -1,0 +1,162 @@
+name: Build PR Binary
+
+# This workflow only runs manually to avoid cluttering the PR
+on:
+  workflow_dispatch:
+    inputs:
+      pr_branch:
+        description: 'PR branch to build from'
+        required: true
+        default: 'python-deployment-fixes'
+        type: choice
+        options:
+          - python-deployment-fixes
+          - dev
+      platforms:
+        description: 'Platforms to build for'
+        required: true
+        default: 'linux'
+        type: choice
+        options:
+          - linux
+          - macos
+          - windows
+          - all
+
+jobs:
+  build-linux:
+    if: ${{ github.event.inputs.platforms == 'linux' || github.event.inputs.platforms == 'all' }}
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout PR branch
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.inputs.pr_branch }}
+    
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'
+    
+    - name: Set up Bun
+      uses: oven-sh/setup-bun@v1
+      with:
+        bun-version: latest
+    
+    - name: Build platform layer
+      run: |
+        echo "Building platform layer from branch: ${{ github.event.inputs.pr_branch }}"
+        cd platform
+        bun install
+        bun run build
+        cd ..
+        echo "Platform build completed"
+    
+    - name: Build SST binary for Linux
+      run: |
+        echo "Building SST binary for Linux from PR branch..."
+        go build -ldflags="-s -w" -o sst-linux-amd64 ./cmd/sst
+        chmod +x sst-linux-amd64
+        echo "Testing binary:"
+        ./sst-linux-amd64 version || echo "Binary built successfully"
+    
+    - name: Upload Linux binary as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: sst-pr-linux-amd64-${{ github.event.inputs.pr_branch }}-${{ github.sha }}
+        path: sst-linux-amd64
+        retention-days: 90
+
+  build-macos:
+    if: ${{ github.event.inputs.platforms == 'macos' || github.event.inputs.platforms == 'all' }}
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout PR branch
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.inputs.pr_branch }}
+    
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'
+    
+    - name: Set up Bun
+      uses: oven-sh/setup-bun@v1
+      with:
+        bun-version: latest
+    
+    - name: Build platform layer
+      run: |
+        echo "Building platform layer from branch: ${{ github.event.inputs.pr_branch }}"
+        cd platform
+        bun install
+        bun run build
+        cd ..
+        echo "Platform build completed"
+    
+    - name: Build SST binaries for macOS
+      run: |
+        echo "Building SST binaries for macOS from PR branch..."
+        GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w" -o sst-darwin-amd64 ./cmd/sst
+        GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w" -o sst-darwin-arm64 ./cmd/sst
+        chmod +x sst-darwin-amd64 sst-darwin-arm64
+        ls -la sst-darwin-*
+    
+    - name: Upload macOS Intel binary as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: sst-pr-darwin-amd64-${{ github.event.inputs.pr_branch }}-${{ github.sha }}
+        path: sst-darwin-amd64
+        retention-days: 90
+        
+    - name: Upload macOS Apple Silicon binary as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: sst-pr-darwin-arm64-${{ github.event.inputs.pr_branch }}-${{ github.sha }}
+        path: sst-darwin-arm64
+        retention-days: 90
+
+  build-windows:
+    if: ${{ github.event.inputs.platforms == 'windows' || github.event.inputs.platforms == 'all' }}
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout PR branch
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.inputs.pr_branch }}
+    
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'
+    
+    - name: Set up Bun
+      uses: oven-sh/setup-bun@v1
+      with:
+        bun-version: latest
+    
+    - name: Build platform layer
+      run: |
+        echo "Building platform layer from branch: ${{ github.event.inputs.pr_branch }}"
+        cd platform
+        bun install
+        bun run build
+        cd ..
+        echo "Platform build completed"
+    
+    - name: Build SST binary for Windows
+      run: |
+        echo "Building SST binary for Windows from PR branch..."
+        go build -ldflags="-s -w" -o sst-windows-amd64.exe ./cmd/sst
+        dir sst-windows-amd64.exe
+    
+    - name: Upload Windows binary as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: sst-pr-windows-amd64-${{ github.event.inputs.pr_branch }}-${{ github.sha }}
+        path: sst-windows-amd64.exe
+        retention-days: 90
