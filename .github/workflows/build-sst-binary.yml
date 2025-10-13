@@ -36,7 +36,7 @@ jobs:
       with:
         name: sst-linux-amd64-${{ github.sha }}
         path: sst-linux-amd64
-        retention-days: 30
+        retention-days: 90
 
   build-macos:
     runs-on: macos-latest
@@ -69,14 +69,14 @@ jobs:
       with:
         name: sst-darwin-amd64-${{ github.sha }}
         path: sst-darwin-amd64
-        retention-days: 30
+        retention-days: 90
         
     - name: Upload macOS Apple Silicon binary as artifact
       uses: actions/upload-artifact@v3
       with:
         name: sst-darwin-arm64-${{ github.sha }}
         path: sst-darwin-arm64
-        retention-days: 30
+        retention-days: 90
 
   build-windows:
     runs-on: windows-latest
@@ -102,4 +102,4 @@ jobs:
       with:
         name: sst-windows-amd64-${{ github.sha }}
         path: sst-windows-amd64.exe
-        retention-days: 30
+        retention-days: 90
