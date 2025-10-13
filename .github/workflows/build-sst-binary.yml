@@ -32,7 +32,7 @@ jobs:
         ls -la sst-linux-amd64
     
     - name: Upload Linux binary as artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: sst-linux-amd64-${{ github.sha }}
         path: sst-linux-amd64
@@ -65,14 +65,14 @@ jobs:
         ls -la sst-darwin-arm64
     
     - name: Upload macOS Intel binary as artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: sst-darwin-amd64-${{ github.sha }}
         path: sst-darwin-amd64
         retention-days: 90
         
     - name: Upload macOS Apple Silicon binary as artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: sst-darwin-arm64-${{ github.sha }}
         path: sst-darwin-arm64
@@ -98,7 +98,7 @@ jobs:
         dir sst-windows-amd64.exe
     
     - name: Upload Windows binary as artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: sst-windows-amd64-${{ github.sha }}
         path: sst-windows-amd64.exe
