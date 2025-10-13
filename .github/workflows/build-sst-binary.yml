@@ -25,11 +25,29 @@ jobs:
       with:
         go-version: '1.21'
     
+    - name: Set up Bun
+      uses: oven-sh/setup-bun@v1
+      with:
+        bun-version: latest
+    
+    - name: Build platform layer
+      run: |
+        echo "Building platform layer..."
+        cd platform
+        bun install
+        bun run build
+        cd ..
+        echo "Platform build completed, checking dist directory:"
+        ls -la platform/dist/ || echo "No dist directory found"
+    
     - name: Build SST binary for Linux
       run: |
+        echo "Building SST binary..."
         go build -ldflags="-s -w" -o sst-linux-amd64 ./cmd/sst
         chmod +x sst-linux-amd64
         ls -la sst-linux-amd64
+        echo "Testing binary:"
+        ./sst-linux-amd64 version || echo "Binary built successfully"
     
     - name: Upload Linux binary as artifact
       uses: actions/upload-artifact@v4
@@ -52,14 +70,31 @@ jobs:
       with:
         go-version: '1.21'
     
+    - name: Set up Bun
+      uses: oven-sh/setup-bun@v1
+      with:
+        bun-version: latest
+    
+    - name: Build platform layer
+      run: |
+        echo "Building platform layer..."
+        cd platform
+        bun install
+        bun run build
+        cd ..
+        echo "Platform build completed, checking dist directory:"
+        ls -la platform/dist/ || echo "No dist directory found"
+    
     - name: Build SST binary for macOS Intel
       run: |
+        echo "Building SST binary for macOS Intel..."
         GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w" -o sst-darwin-amd64 ./cmd/sst
         chmod +x sst-darwin-amd64
         ls -la sst-darwin-amd64
     
     - name: Build SST binary for macOS Apple Silicon
       run: |
+        echo "Building SST binary for macOS Apple Silicon..."
         GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w" -o sst-darwin-arm64 ./cmd/sst
         chmod +x sst-darwin-arm64
         ls -la sst-darwin-arm64
@@ -92,8 +127,24 @@ jobs:
       with:
         go-version: '1.21'
     
+    - name: Set up Bun
+      uses: oven-sh/setup-bun@v1
+      with:
+        bun-version: latest
+    
+    - name: Build platform layer
+      run: |
+        echo "Building platform layer..."
+        cd platform
+        bun install
+        bun run build
+        cd ..
+        echo "Platform build completed, checking dist directory:"
+        ls platform/dist/ || echo "No dist directory found"
+    
     - name: Build SST binary for Windows
       run: |
+        echo "Building SST binary for Windows..."
         go build -ldflags="-s -w" -o sst-windows-amd64.exe ./cmd/sst
         dir sst-windows-amd64.exe
     

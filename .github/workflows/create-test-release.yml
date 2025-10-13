@@ -27,6 +27,21 @@ jobs:
       with:
         go-version: '1.21'
     
+    - name: Set up Bun
+      uses: oven-sh/setup-bun@v1
+      with:
+        bun-version: latest
+    
+    - name: Build platform layer
+      run: |
+        echo "Building platform layer..."
+        cd platform
+        bun install
+        bun run build
+        cd ..
+        echo "Platform build completed"
+        ls -la platform/dist/ || echo "No dist directory found"
+    
     - name: Build binaries for multiple platforms
       run: |
         # Linux AMD64
