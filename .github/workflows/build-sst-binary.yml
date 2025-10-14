@@ -2,13 +2,17 @@ name: Build SST Binary
 
 on:
   push:
-    branches: [ python-deployment-fixes, build-automation ]
+    branches: [ build-automation ]  # Only trigger on build script changes
+    paths:
+      - '.github/workflows/**'  # Only when workflow files change
   workflow_dispatch: # Allows manual triggering
     inputs:
       branch:
         description: 'Branch to build from'
         required: true
         default: 'python-deployment-fixes'
+  schedule:
+    - cron: '0 6 * * 1'  # Weekly build on Mondays at 6 AM UTC (optional)
 
 jobs:
   build-linux:
