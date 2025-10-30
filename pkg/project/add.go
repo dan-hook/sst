@@ -1,7 +1,7 @@
 package project
 
 import (
-	"github.com/sst/sst/v3/pkg/process"
+	"github.com/dan-hook/sst/v3/pkg/process"
 	"os"
 	"path/filepath"
 )

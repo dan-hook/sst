@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/common/apitype"
-	"github.com/sst/sst/v3/pkg/flag"
-	"github.com/sst/sst/v3/pkg/project/provider"
+	"github.com/dan-hook/sst/v3/pkg/flag"
+	"github.com/dan-hook/sst/v3/pkg/project/provider"
 	"github.com/zeebo/xxh3"
 	"golang.org/x/sync/errgroup"
 )

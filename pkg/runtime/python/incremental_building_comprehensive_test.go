@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sst/sst/v3/pkg/runtime"
+	"github.com/dan-hook/sst/v3/pkg/runtime"
 )
 
 // TestIncrementalBuilder_SelectivePackageBuilding tests selective package building

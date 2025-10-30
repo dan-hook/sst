@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/fsnotify/fsnotify"
-	"github.com/sst/sst/v3/pkg/bus"
+	"github.com/dan-hook/sst/v3/pkg/bus"
 )
 
 type FileChangedEvent struct {

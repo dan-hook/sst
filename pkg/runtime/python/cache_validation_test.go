@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sst/sst/v3/pkg/runtime"
+	"github.com/dan-hook/sst/v3/pkg/runtime"
 )
 
 // TestCacheIsWorking validates that the caching system is functioning correctly

@@ -11,10 +11,10 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/ecs"
 	"github.com/aws/aws-sdk-go-v2/service/ecs/types"
 	"github.com/kballard/go-shellquote"
-	"github.com/sst/sst/v3/cmd/sst/mosaic/aws/bridge"
-	"github.com/sst/sst/v3/pkg/bus"
-	"github.com/sst/sst/v3/pkg/process"
-	"github.com/sst/sst/v3/pkg/project"
+	"github.com/dan-hook/sst/v3/cmd/sst/mosaic/aws/bridge"
+	"github.com/dan-hook/sst/v3/pkg/bus"
+	"github.com/dan-hook/sst/v3/pkg/process"
+	"github.com/dan-hook/sst/v3/pkg/project"
 )
 
 type TaskProvisionEvent struct {

@@ -7,11 +7,11 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/sst/sst/v3/cmd/sst/mosaic/aws/appsync"
-	"github.com/sst/sst/v3/cmd/sst/mosaic/aws/bridge"
-	"github.com/sst/sst/v3/pkg/project"
-	"github.com/sst/sst/v3/pkg/project/provider"
-	"github.com/sst/sst/v3/pkg/server"
+	"github.com/dan-hook/sst/v3/cmd/sst/mosaic/aws/appsync"
+	"github.com/dan-hook/sst/v3/cmd/sst/mosaic/aws/bridge"
+	"github.com/dan-hook/sst/v3/pkg/project"
+	"github.com/dan-hook/sst/v3/pkg/project/provider"
+	"github.com/dan-hook/sst/v3/pkg/server"
 )
 
 var ErrIoTDelay = fmt.Errorf("iot not available")

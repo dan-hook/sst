@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/sst/sst/v3/internal/util"
-	"github.com/sst/sst/v3/pkg/global"
+	"github.com/dan-hook/sst/v3/internal/util"
+	"github.com/dan-hook/sst/v3/pkg/global"
 )
 
 type LocalHome struct {

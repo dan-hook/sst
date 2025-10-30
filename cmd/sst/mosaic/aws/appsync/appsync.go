@@ -19,7 +19,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	v4 "github.com/aws/aws-sdk-go-v2/aws/signer/v4"
 	"github.com/gorilla/websocket"
-	"github.com/sst/sst/v3/pkg/id"
+	"github.com/dan-hook/sst/v3/pkg/id"
 )
 
 var log = slog.Default().With("service", "appsync.connection")

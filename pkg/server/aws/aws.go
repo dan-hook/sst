@@ -6,8 +6,8 @@ import (
 	"net/rpc"
 	"sync"
 
-	"github.com/sst/sst/v3/pkg/project"
-	"github.com/sst/sst/v3/pkg/project/provider"
+	"github.com/dan-hook/sst/v3/pkg/project"
+	"github.com/dan-hook/sst/v3/pkg/project/provider"
 )
 
 type aws struct {

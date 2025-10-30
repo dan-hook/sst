@@ -15,7 +15,7 @@ import (
 	_ "unsafe"
 
 	cloudflare "github.com/cloudflare/cloudflare-go"
-	"github.com/sst/sst/v3/internal/util"
+	"github.com/dan-hook/sst/v3/internal/util"
 )
 
 type CloudflareProvider struct {

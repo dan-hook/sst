@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sst/sst/v3/pkg/bus"
+	"github.com/dan-hook/sst/v3/pkg/bus"
 )
 
 func TestFunctionBuildProgressEvent(t *testing.T) {

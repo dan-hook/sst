@@ -11,7 +11,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/sst/sst/v3/pkg/runtime"
+	"github.com/dan-hook/sst/v3/pkg/runtime"
 )
 
 // BuildPipeline provides a unified build process for all Python project types

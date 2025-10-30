@@ -6,11 +6,11 @@ import (
 	"strings"
 
 	"github.com/fatih/color"
-	"github.com/sst/sst/v3/cmd/sst/cli"
-	"github.com/sst/sst/v3/cmd/sst/mosaic/ui"
-	"github.com/sst/sst/v3/pkg/global"
-	"github.com/sst/sst/v3/pkg/npm"
-	"github.com/sst/sst/v3/pkg/process"
+	"github.com/dan-hook/sst/v3/cmd/sst/cli"
+	"github.com/dan-hook/sst/v3/cmd/sst/mosaic/ui"
+	"github.com/dan-hook/sst/v3/pkg/global"
+	"github.com/dan-hook/sst/v3/pkg/npm"
+	"github.com/dan-hook/sst/v3/pkg/process"
 )
 
 func CmdUpgrade(c *cli.Cli) error {

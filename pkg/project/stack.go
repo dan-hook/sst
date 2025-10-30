@@ -5,8 +5,8 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/common/apitype"
-	"github.com/sst/sst/v3/pkg/project/common"
-	"github.com/sst/sst/v3/pkg/project/provider"
+	"github.com/dan-hook/sst/v3/pkg/project/common"
+	"github.com/dan-hook/sst/v3/pkg/project/provider"
 )
 
 type BuildFailedEvent struct {

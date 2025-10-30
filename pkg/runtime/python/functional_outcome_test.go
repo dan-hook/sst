@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/sst/sst/v3/pkg/runtime"
+	"github.com/dan-hook/sst/v3/pkg/runtime"
 )
 
 // TestFunctionalOutcomes tests that the Python runtime can successfully build and execute

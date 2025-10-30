@@ -9,7 +9,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/sst/sst/v3/pkg/js"
+	"github.com/dan-hook/sst/v3/pkg/js"
 )
 
 //go:generate ../scripts/build

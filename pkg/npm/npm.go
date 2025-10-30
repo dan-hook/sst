@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/sst/sst/v3/internal/fs"
+	"github.com/dan-hook/sst/v3/internal/fs"
 )
 
 type Package struct {

@@ -8,7 +8,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/sst/sst/v3/pkg/project"
+	"github.com/dan-hook/sst/v3/pkg/project"
 )
 
 // Base resource for Vercel providers

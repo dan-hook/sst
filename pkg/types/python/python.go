@@ -7,8 +7,8 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/sst/sst/v3/internal/fs"
-	"github.com/sst/sst/v3/pkg/project/common"
+	"github.com/dan-hook/sst/v3/internal/fs"
+	"github.com/dan-hook/sst/v3/pkg/project/common"
 )
 
 func Generate(root string, links common.Links) error {

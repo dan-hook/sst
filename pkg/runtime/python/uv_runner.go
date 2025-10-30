@@ -14,7 +14,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/sst/sst/v3/pkg/process"
+	"github.com/dan-hook/sst/v3/pkg/process"
 )
 
 // UvCommandRunner executes UV commands efficiently with caching and optimization

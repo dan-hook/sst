@@ -1,4 +1,4 @@
-module github.com/sst/sst/v3
+module github.com/dan-hook/sst/v3
 
 go 1.23.1
 

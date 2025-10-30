@@ -21,7 +21,8 @@ cp ./functions/docker/python.Dockerfile ./dist/dockerfiles/python.Dockerfile
 cd ./support/bridge-task
 timestamp=$(date +%Y%m%d%H%M%S)
 docker buildx create --name multi --driver docker-container --use
-docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/sst/sst/bridge-task:$timestamp -t ghcr.io/sst/sst/bridge-task:latest $([ "$DOCKER_PUSH" = "true" ] && echo "--push") .
+# Build from repo root to include all dependencies for replace directive
+docker buildx build --platform linux/amd64,linux/arm64 -f ./Dockerfile -t ghcr.io/dan-hook/sst/bridge-task:$timestamp -t ghcr.io/dan-hook/sst/bridge-task:latest $([ "$DOCKER_PUSH" = "true" ] && echo "--push") ../../..
 
 
 cd $ORIGINAL_DIR

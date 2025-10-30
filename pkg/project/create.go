@@ -13,9 +13,9 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/sst/sst/v3/internal/util"
-	"github.com/sst/sst/v3/pkg/npm"
-	"github.com/sst/sst/v3/platform"
+	"github.com/dan-hook/sst/v3/internal/util"
+	"github.com/dan-hook/sst/v3/pkg/npm"
+	"github.com/dan-hook/sst/v3/platform"
 	"github.com/tailscale/hujson"
 )
 

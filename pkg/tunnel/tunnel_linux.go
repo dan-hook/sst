@@ -9,8 +9,8 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/sst/sst/v3/internal/util"
-	"github.com/sst/sst/v3/pkg/process"
+	"github.com/dan-hook/sst/v3/internal/util"
+	"github.com/dan-hook/sst/v3/pkg/process"
 )
 
 type linuxPlatform struct{}

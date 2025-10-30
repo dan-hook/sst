@@ -13,11 +13,11 @@ import (
 	"github.com/briandowns/spinner"
 	"github.com/fatih/color"
 	"github.com/manifoldco/promptui"
-	"github.com/sst/sst/v3/cmd/sst/cli"
-	"github.com/sst/sst/v3/internal/util"
-	"github.com/sst/sst/v3/pkg/npm"
-	"github.com/sst/sst/v3/pkg/process"
-	"github.com/sst/sst/v3/pkg/project"
+	"github.com/dan-hook/sst/v3/cmd/sst/cli"
+	"github.com/dan-hook/sst/v3/internal/util"
+	"github.com/dan-hook/sst/v3/pkg/npm"
+	"github.com/dan-hook/sst/v3/pkg/process"
+	"github.com/dan-hook/sst/v3/pkg/project"
 )
 
 func CmdInit(cli *cli.Cli) error {

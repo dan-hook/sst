@@ -13,9 +13,9 @@ import (
 	"sync"
 
 	"github.com/BurntSushi/toml"
-	"github.com/sst/sst/v3/internal/fs"
-	"github.com/sst/sst/v3/pkg/process"
-	"github.com/sst/sst/v3/pkg/runtime"
+	"github.com/dan-hook/sst/v3/internal/fs"
+	"github.com/dan-hook/sst/v3/pkg/process"
+	"github.com/dan-hook/sst/v3/pkg/runtime"
 )
 
 type Runtime struct {

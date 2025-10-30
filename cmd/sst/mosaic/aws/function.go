@@ -15,13 +15,13 @@ import (
 	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
-	"github.com/sst/sst/v3/cmd/sst/mosaic/aws/bridge"
-	"github.com/sst/sst/v3/cmd/sst/mosaic/watcher"
-	"github.com/sst/sst/v3/pkg/bus"
-	"github.com/sst/sst/v3/pkg/events"
-	"github.com/sst/sst/v3/pkg/project"
-	"github.com/sst/sst/v3/pkg/runtime"
-	"github.com/sst/sst/v3/pkg/server"
+	"github.com/dan-hook/sst/v3/cmd/sst/mosaic/aws/bridge"
+	"github.com/dan-hook/sst/v3/cmd/sst/mosaic/watcher"
+	"github.com/dan-hook/sst/v3/pkg/bus"
+	"github.com/dan-hook/sst/v3/pkg/events"
+	"github.com/dan-hook/sst/v3/pkg/project"
+	"github.com/dan-hook/sst/v3/pkg/runtime"
+	"github.com/dan-hook/sst/v3/pkg/server"
 )
 
 type FunctionInvokedEvent struct {

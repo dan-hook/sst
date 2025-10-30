@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sst/sst/v3/cmd/sst/mosaic/aws"
+	"github.com/dan-hook/sst/v3/cmd/sst/mosaic/aws"
 )
 
 // TestFunctionBuildProgressEvent_UIEventHandling tests the integration of FunctionBuildProgressEvent

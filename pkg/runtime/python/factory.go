@@ -3,7 +3,7 @@ package python
 import (
 	"fmt"
 
-	"github.com/sst/sst/v3/pkg/runtime"
+	"github.com/dan-hook/sst/v3/pkg/runtime"
 )
 
 // RuntimeFactory creates Python runtime components with sensible defaults

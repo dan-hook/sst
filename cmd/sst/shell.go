@@ -7,10 +7,10 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/sst/sst/v3/cmd/sst/cli"
-	"github.com/sst/sst/v3/internal/util"
-	"github.com/sst/sst/v3/pkg/process"
-	"github.com/sst/sst/v3/pkg/project/provider"
+	"github.com/dan-hook/sst/v3/cmd/sst/cli"
+	"github.com/dan-hook/sst/v3/internal/util"
+	"github.com/dan-hook/sst/v3/pkg/process"
+	"github.com/dan-hook/sst/v3/pkg/project/provider"
 )
 
 func CmdShell(c *cli.Cli) error {

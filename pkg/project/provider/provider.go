@@ -12,9 +12,9 @@ import (
 	"os"
 	"time"
 
-	"github.com/sst/sst/v3/internal/util"
-	"github.com/sst/sst/v3/pkg/flag"
-	"github.com/sst/sst/v3/pkg/id"
+	"github.com/dan-hook/sst/v3/internal/util"
+	"github.com/dan-hook/sst/v3/pkg/flag"
+	"github.com/dan-hook/sst/v3/pkg/id"
 	"golang.org/x/exp/slog"
 )
 

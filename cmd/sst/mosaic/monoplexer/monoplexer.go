@@ -7,7 +7,7 @@ import (
 	"io"
 	"os/exec"
 
-	"github.com/sst/sst/v3/pkg/process"
+	"github.com/dan-hook/sst/v3/pkg/process"
 )
 
 type Monoplexer struct {

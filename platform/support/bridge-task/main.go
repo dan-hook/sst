@@ -12,9 +12,9 @@ import (
 	"time"
 
 	"github.com/aws/aws-sdk-go-v2/config"
-	"github.com/sst/sst/v3/cmd/sst/mosaic/aws/appsync"
-	"github.com/sst/sst/v3/cmd/sst/mosaic/aws/bridge"
-	"github.com/sst/sst/v3/pkg/id"
+	"github.com/dan-hook/sst/v3/cmd/sst/mosaic/aws/appsync"
+	"github.com/dan-hook/sst/v3/cmd/sst/mosaic/aws/bridge"
+	"github.com/dan-hook/sst/v3/pkg/id"
 )
 
 var SST_APP = os.Getenv("SST_APP")

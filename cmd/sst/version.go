@@ -5,8 +5,8 @@ import (
 	"runtime"
 
 	"github.com/pulumi/pulumi/sdk/v3"
-	"github.com/sst/sst/v3/cmd/sst/cli"
-	"github.com/sst/sst/v3/pkg/global"
+	"github.com/dan-hook/sst/v3/cmd/sst/cli"
+	"github.com/dan-hook/sst/v3/pkg/global"
 )
 
 var CmdVersion = &cli.Command{

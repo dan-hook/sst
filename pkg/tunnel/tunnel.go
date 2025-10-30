@@ -7,7 +7,7 @@ import (
 
 	"github.com/xjasonlyu/tun2socks/v2/engine"
 
-	"github.com/sst/sst/v3/pkg/process"
+	"github.com/dan-hook/sst/v3/pkg/process"
 )
 
 // Platform-specific interface
