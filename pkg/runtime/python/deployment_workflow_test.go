@@ -45,13 +45,39 @@ func TestDeploymentWorkflow(t *testing.T) {
 			handler:     "app/functions/api/handler.main",
 			runtime:     "python3.11",
 		},
+		{
+			name:        "monorepo-layout-api",
+			examplePath: "examples/python-layouts/monorepo-layout",
+			handler:     "services/api/handler.main",
+			runtime:     "python3.12",
+		},
+		{
+			name:        "monorepo-layout-auth",
+			examplePath: "examples/python-layouts/monorepo-layout",
+			handler:     "services/auth/handler.main",
+			runtime:     "python3.12",
+		},
+		{
+			name:        "monorepo-layout-worker",
+			examplePath: "examples/python-layouts/monorepo-layout",
+			handler:     "services/worker/handler.main",
+			runtime:     "python3.12",
+		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			// Find project root for absolute path resolution
+			projectRoot, err := findProjectRoot()
+			if err != nil {
+				t.Skipf("Could not find project root: %v", err)
+			}
+
+			exampleAbsPath := filepath.Join(projectRoot, tt.examplePath)
+
 			// Skip if example doesn't exist
-			if _, err := os.Stat(tt.examplePath); os.IsNotExist(err) {
-				t.Skipf("Example %s not found, skipping", tt.examplePath)
+			if _, err := os.Stat(exampleAbsPath); os.IsNotExist(err) {
+				t.Skipf("Example %s not found, skipping", exampleAbsPath)
 			}
 
 			t.Logf("🧪 Testing complete deployment workflow for %s", tt.name)
@@ -62,12 +88,16 @@ func TestDeploymentWorkflow(t *testing.T) {
 			// Test the complete build workflow
 			functionID := "deployment-test-" + tt.name
 
+			// Create mock properties for the build
+			properties := json.RawMessage(`{"architecture": "x86_64", "container": false}`)
+
 			start := time.Now()
 			result, err := pythonRuntime.Build(context.Background(), &runtime.BuildInput{
 				FunctionID: functionID,
 				Handler:    tt.handler,
 				Runtime:    tt.runtime,
-				CfgPath:    filepath.Join(tt.examplePath, "sst.config.ts"),
+				Properties: properties,
+				CfgPath:    filepath.Join(exampleAbsPath, "sst.config.ts"),
 			})
 			buildDuration := time.Since(start)
 
@@ -85,7 +115,8 @@ func TestDeploymentWorkflow(t *testing.T) {
 			}
 
 			// Validate output directory exists and contains expected files
-			outputPath := filepath.Join(tt.examplePath, result.Out)
+			// result.Out is already an absolute path from the builder
+			outputPath := result.Out
 			if _, err := os.Stat(outputPath); os.IsNotExist(err) {
 				t.Errorf("❌ Output directory does not exist for %s: %s", tt.name, outputPath)
 			}
